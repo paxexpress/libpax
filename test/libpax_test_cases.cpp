@@ -4,9 +4,12 @@
 #include <libpax.h>
 #include <libpax_api.h>
 
+#include "libpax_benchmark.h"
+
 /*
   Tests if both of the last two bytes of the MAC are used in the counting algorithm.
 */
+
 void test_mac_add_bytes() {
   libpax_counter_reset();
   uint8_t test_mac_addr[6] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
@@ -195,15 +198,19 @@ void test_integration() {
 }
 
 void run_tests() {
-   UNITY_BEGIN();
+  UNITY_BEGIN();
 
-    RUN_TEST(test_mac_add_bytes);
-    RUN_TEST(test_collision_add);
-    RUN_TEST(test_counter_reset);
-    RUN_TEST(test_config_store);
-    RUN_TEST(test_integration);
+  RUN_TEST(test_mac_add_bytes);
+  RUN_TEST(test_collision_add);
+  RUN_TEST(test_counter_reset);
+  RUN_TEST(test_config_store);
+  RUN_TEST(test_integration);
 
-    UNITY_END();
+#ifndef NO_BENCHMARK
+  RUN_TEST(test_benchmark);
+#endif
+
+  UNITY_END();
 }
 
 #ifdef LIBPAX_ARDUINO
